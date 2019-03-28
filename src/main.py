@@ -2,6 +2,7 @@ import pygame
 import pygame.locals
 import os
 from player import Player
+from coin import Coin
 from constants import *
 
 
@@ -29,8 +30,7 @@ def load_images(image_names):
     return images
 
 
-def redraw_game_window(window, background, player):
-    global walk_count
+def redraw_game_window(window, background, player, coin):
     window.blit(background, (0, 0))
 
     if player.walk_count + 1 >= 9:
@@ -42,9 +42,10 @@ def redraw_game_window(window, background, player):
     elif player.right:
         window.blit(player.walk_right_sprites[player.walk_count], (player.x, player.y))
         player.walk_count += 1
-    else:
-        window.blit(player.sprite, (player.x, player.y))
 
+    # update coin sprite
+    coin.update_sprite_status()
+    window.blit(coin.sprites[coin.sprite_number], (coin.x, coin.y))
     pygame.display.update()
 
 
@@ -56,6 +57,8 @@ def main():
                     pygame.image.load(os.path.join('../res/img', 'standing.png')),
                     load_images(PLAYER_LEFT_SPRITE_FILENAMES),
                     load_images(PLAYER_RIGHT_SPRITE_FILENAMES))
+    coin = Coin(300, WINDOW_HEIGHT - 125,
+                load_images(COIN_SPRITE_FILENAMES))
     run = True
     while run:
         pygame.time.delay(30)
@@ -67,8 +70,7 @@ def main():
         keys = pygame.key.get_pressed()
         player.move(keys)
 
-
-        redraw_game_window(win, background, player)
+        redraw_game_window(win, background, player, coin)
 
     pygame.quit()
 

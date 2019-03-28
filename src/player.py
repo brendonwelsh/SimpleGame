@@ -16,9 +16,10 @@ class Player:
         self.x = x
         self.y = y
         self.left = False
-        self.right = False
+        self.right = True
         self.walk_count = 0
-        if vel is None: self.vel = DEFAULT_PLAYER_SPEED
+        if vel is None:
+            self.vel = DEFAULT_PLAYER_SPEED
         self.sprite = sprite
         self.walk_left_sprites = walk_left_sprites
         self.walk_right_sprites = walk_right_sprites
@@ -42,6 +43,4 @@ class Player:
         elif keys[pygame.K_DOWN]:
             self.y += self.vel
         else:
-            self.right = False
-            self.left = False
             self.walk_count = 0
