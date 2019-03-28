@@ -8,6 +8,8 @@ from constants import *
 def init_pygame():
     pygame.init()
     clock = pygame.time.Clock()
+    music = pygame.mixer.music.load(os.path.join('../res/sound', 'bgm.mp3'))
+    pygame.mixer.music.play(-1)
     win = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption(WINDOW_CAPTION)
     return win, clock
